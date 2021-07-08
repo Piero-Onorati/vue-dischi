@@ -4,7 +4,7 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gx-4" v-if="!loading">
                 <Card v-for="(record,index) in records" :key="index" :details="record"/>
             </div>
-            <Loader/>
+            <Loader v-else/>
         </div>
     </section>
 </template>
