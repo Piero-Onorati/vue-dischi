@@ -1,0 +1,18 @@
+@import 'bootstrap';
+@import "~@fontsource/montserrat/index.css";
+// @import "~@fontsource/montserrat/300.css";
+// @import "~@fontsource/montserrat/500.css";
+
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(33,39,44,1) 0%, rgba(55,61,65,1) 100%);
+    font-family: "Montserrat";
+}
+
