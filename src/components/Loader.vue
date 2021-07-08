@@ -1,0 +1,82 @@
+<template>
+    <div class="container">
+        <div class="pulsating-circle"></div>
+    </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style lang="scss" scoped>
+@import '../style/vars.scss';
+
+.container{
+    height: 100vh;
+
+   .pulsating-circle {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 50px;
+        height: 50px;
+  
+        &:before {
+            content: '';
+            position: relative;
+            display: block;
+            width: 300%;
+            height: 300%;
+            box-sizing: border-box;
+            margin-left: -100%;
+            margin-top: -100%;
+            border-radius: 50%;
+            background-color: #1DB954;
+            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+    
+  
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0; 
+            top: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: $light;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(0,0,0,.3);
+            animation: pulse-dot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
+        }
+    
+    }
+
+    @keyframes pulse-ring {
+        0% {
+            transform: scale(.33);
+        }
+        80%, 100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes pulse-dot {
+        0% {
+            transform: scale(.8);
+        }
+        50% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(.8);
+        }
+    }
+
+}
+
+
+</style>

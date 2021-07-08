@@ -1,6 +1,6 @@
 <template>
     <header>
-        <img src="../assets/img/spotify-icon-marilyn-scott-0.png" class="my-2 mx-4" alt="logo">
+        <img src="../assets/img/spotify-icon.png" class="my-2 mx-4" alt="logo">
     </header>
 </template>
 
