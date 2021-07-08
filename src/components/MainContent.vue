@@ -1,18 +1,21 @@
 <template>
-    <div class="container">
-        <h2>ciao</h2>
-        <!-- <Card/> -->
-    </div>
+    <section>
+        <div class="container-sm py-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gx-4 ">
+                <Card v-for="(record,index) in records" :key="index" :details="record"/>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
 import axios from 'axios'
-// import Card from '@/components/Card.vue'
+import Card from '@/components/Card.vue'
 
 export default {
     name:'MainContent',
     components:{
-        // Card,
+        Card
     },
     data(){
         return{
@@ -34,7 +37,6 @@ export default {
                 .catch(error =>{
                     console.log('Errore', error);
                 });
-
         }
 
     }
@@ -42,6 +44,15 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
+@import '../style/vars.scss';
+
+section{
+    background-color: $dark;
+}
+
+
+
+
 
 </style>

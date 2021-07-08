@@ -1,6 +1,6 @@
 <template>
     <header>
-        <img src="../assets/img/spotify-icon-marilyn-scott-0.png" alt="logo">
+        <img src="../assets/img/spotify-icon-marilyn-scott-0.png" class="my-2 mx-4" alt="logo">
     </header>
 </template>
 
@@ -12,10 +12,11 @@ export default {
 </script>
 
 <style lang='scss'>
-@import '../style/mixins.scss';
+@import '../style/vars.scss';
 
 header{
-    @include glass;
+    background-color: $light;
+
 
     img{
         width: 50px;
