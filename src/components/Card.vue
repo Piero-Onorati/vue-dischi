@@ -26,7 +26,6 @@ export default {
 
 .my_card{
     background-color: $light;
-    border-radius: 10px;
 
     &:hover{
         cursor: pointer;
