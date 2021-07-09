@@ -1,12 +1,14 @@
 <template>
     <section>
-        <select v-model="selected" class="form-select">
-            <option v-for="(option,index) in options" :key="index">{{option}}</option>
-        </select>
-        <!-- <button btn primary @click="show"> show</button> -->
         <div class="container-sm py-4">
+            <div class="col-3 d-flex">
+            <select class="form-select" aria-label="Default select example" v-model="selected">
+                <option>All</option>
+                <option v-for="(option,index) in options" :key="index">{{option}}</option>
+            </select>
+            </div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gx-4" v-if="!loading">
-                <Card v-for="(record,index) in records" :key="index" :details="record"/>
+                <Card v-for="(record,index) in filterRecords" :key="index" :details="record"/>
             </div>
             <Loader v-else/>
         </div>
@@ -38,16 +40,30 @@ export default {
 
 
     created(){
-        this.getTheRecord(),
-        this.createList()
-
+        this.getTheRecord()
     },
 
     computed:{
+        filterRecords(){
+         
+                return this.records.filter(element =>{
+                    if (this.selected == '' || this.selected == 'All') {
+                        return this.records
+                        
+                    }else{
+                        
+                        return element.genre == this.selected
 
-   
+                    }
+            });
+                
+            
+            
+            
 
-
+        }
+        
+        
         
     },
 
@@ -58,6 +74,7 @@ export default {
                 .then(res=>{
                     this.records = res.data.response;
                     this.loading = false
+                    this.createList()
                 })
                 .catch(error =>{
                     console.log('Errore', error);
@@ -65,30 +82,21 @@ export default {
         },
 
         createList(){
-            // console.log(this.records)
+            console.log(this.records)
             this.records.forEach(element => {
-                // console.log(element.genre)
                 if (!this.options.includes(element.genre)) {
                      this.options.push(element.genre)
                 }
             });
+        },
 
-            console.log(this.options)
-        }
+      
+
+        
 
     
     }
 
-        
-
-        
-
-        
-            
-
-        
-
-    
 
 }
 </script>
@@ -98,6 +106,7 @@ export default {
 
 section{
     background-color: $dark;
+    height: 100vh;
 }
 
 
