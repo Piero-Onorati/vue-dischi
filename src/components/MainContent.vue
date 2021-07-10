@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="container-sm py-5">
-            <!-- if the Select is the Component with the list that needed to be sorted -->
+            <!-- 1) if the Select is the Component with the list that needed to be sorted -->
             <!-- <div class="col-6 select py-4">
                 <span class="px-3">Select genre...</span>
                 <select v-model="selected">
@@ -17,14 +17,13 @@
                 </select>
             </div>   -->
             
-            <!-- if the Select is a Child Component -->
+            <!-- 2) if the Select is a Child Component -->
             <!-- <Select :details="options" @vModelGenre="genreReceived"  @vModelDate="dateReceived"/>  -->
            
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gx-4" v-if="!loading">
                 <Card v-for="(record,index) in filterRecords" :key="index" :details="record"/>
             </div>
             <Loader v-else/>
-
            
         </div>
     </section>
@@ -34,7 +33,8 @@
 import axios from 'axios'
 import Card from '@/components/Card.vue'
 import Loader from '@/components/Loader.vue'
-/* if the Select is a Child Component */
+import { component } from 'vue/types/umd'
+/* 2) if the Select is a Child Component */
 // import Select from '@/components/Select.vue'
 
 
@@ -43,7 +43,7 @@ export default {
     components:{
         Card,
         Loader,
-        /* if the Select is a Child Component */
+        /* 2) if the Select is a Child Component */
         // Select
     },
 
@@ -57,7 +57,6 @@ export default {
             options:[],
         }
     },
-
 
     created(){
         this.getTheRecord()
@@ -85,13 +84,12 @@ export default {
     },
 
 
-    /* Receive and assaign the V-model values when the 'Select.vue' is a non related component*/
+    /* 3) Receive and assaign the V-model values when the 'Select.vue' is a non related component*/
     mounted(){
         this.$root.$on('vModelGenre',(arg1)=>{ 
             this.selected=arg1
         });
         
-
         this.$root.$on('vModelDate',(arg2)=>{ 
             this.dateSelected=arg2
         });
@@ -106,6 +104,7 @@ export default {
                     this.records = res.data.response;
                     this.loading = false
                     this.$root.$emit('sendArray', this.records)
+                    /* 1) e 2) Used when the select is in the same component or in a child component*/
                     // this.createList()
                 })
                 .catch(error =>{
@@ -113,6 +112,7 @@ export default {
                 });
         },
 
+        /* 1) e 2) Used when the select is in the same component or in a child component*/
         // createList(){
         //     this.records.forEach(element => {
         //         if (!this.options.includes(element.genre)) {
@@ -151,7 +151,7 @@ export default {
             
         },
 
-        /* Assaign the V-model values of child to the v-models of parents when 'Select.vue' is a Child Component */
+        /* 2) Assaign the V-model values of child to the v-models of parents when 'Select.vue' is a Child Component */
         // genreReceived(arg1){
         //     console.log
         //     this.selected=arg1
@@ -173,7 +173,7 @@ section{
     height: 100vh;
     overflow-y:scroll ;
 
-    /* style for select */
+    /* 1) style for select */
     /* .select{
             color:$text-light;
 
@@ -184,12 +184,7 @@ section{
             } 
 
     } */
-  
-  
+
 }
-
-
-
-
 
 </style>

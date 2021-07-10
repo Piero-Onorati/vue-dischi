@@ -17,8 +17,8 @@
 export default {
     name:'Card',
     props: ['details']
-
 }
+
 </script>
 
 <style lang='scss'>
@@ -37,14 +37,14 @@ export default {
         width:70%
     }
 
+    .card-body{
+
         .card-title{
             font-weight:$bold-w ; 
             color: $text-light;
             text-transform: uppercase;
             height: 70px;
         }
-
-    
 
         .card-text{
             height: 20%;
@@ -57,9 +57,8 @@ export default {
             }
         }
 
+    }
+
 }
-
-
-
 
 </style>

@@ -3,7 +3,7 @@
                 <span class="px-3">Select genre...</span>
                 <select v-model="selecting" @change="selectGenre">
                     <option >All</option>
-                    <!-- if the Select is a Child Component -->
+                    <!-- 2) if the Select is a Child Component -->
                     <!-- <option v-for="(detail,index) in details" :key="index">{{detail}}</option> -->
                     <option v-for="(option,index) in options" :key="index">{{option}}</option>
                 </select>
@@ -20,7 +20,7 @@
 <script>
 export default {
     name:'Select',
-    /* if the Select is a Child Component use props*/
+    /* 2) if the Select is a Child Component use props*/
     // props:["details"],
     data(){
         return{
@@ -30,6 +30,7 @@ export default {
         }
     },
 
+    /* 3) if the Select is a non related Component, in "created" we use a function for populate the options of select*/
     created(){
         this.$root.$on('sendArray',(arr)=>{ 
             arr.forEach(element => {
@@ -43,25 +44,25 @@ export default {
     },
 
     methods:{
-        /* if the Select is a Child Component*/
+        /* 2) if the Select is a Child Component*/
         // selectGenre(){
         //     this.$emit('vModelGenre', this.selecting)
         // },
 
-        selectGenre(){
-            this.$root.$emit('vModelGenre', this.selecting)
-        },
-
-        /* if the Select is a Child Component*/
         // selectDate(){
         //     this.$emit('vModelDate', this.dateSelecting)
         // }
+
+        /* 3) if the Select is a non related Component*/
+        selectGenre(){
+            this.$root.$emit('vModelGenre', this.selecting)
+        },
+        
         selectDate(){
             this.$root.$emit('vModelDate', this.dateSelecting)
         }
     }
-
-
+    
 }
 </script>
 
