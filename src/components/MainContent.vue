@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="container-sm pb-4">
+        <div class="container-sm py-5">
             <!-- if the Select is the Component with the list that needed to be sorted -->
             <!-- <div class="col-6 select py-4">
                 <span class="px-3">Select genre...</span>
@@ -18,7 +18,7 @@
             </div>   -->
             
             <!-- if the Select is a Child Component -->
-            <Select :details="options" @vModelGenre="genreReceived"  @vModelDate="dateReceived"/> 
+            <!-- <Select :details="options" @vModelGenre="genreReceived"  @vModelDate="dateReceived"/>  -->
            
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gx-4" v-if="!loading">
                 <Card v-for="(record,index) in filterRecords" :key="index" :details="record"/>
@@ -34,7 +34,8 @@
 import axios from 'axios'
 import Card from '@/components/Card.vue'
 import Loader from '@/components/Loader.vue'
-import Select from '@/components/Select.vue'
+/* if the Select is a Child Component */
+// import Select from '@/components/Select.vue'
 
 
 export default {
@@ -42,7 +43,8 @@ export default {
     components:{
         Card,
         Loader,
-        Select
+        /* if the Select is a Child Component */
+        // Select
     },
 
     data(){
@@ -63,12 +65,13 @@ export default {
 
     computed:{
 
+        /* apply both filters (for genre and for date)*/
         filterRecords: function(){
             return this.filterByDate(this.filterByGenre(this.records))
         }
 
+        /* apply only one filter*/
         // filterRecords(){
-
         //     return this.records.filter(element =>{
         //         if (this.selected == '' || this.selected == 'All') {
         //             return this.records
@@ -77,8 +80,21 @@ export default {
         //             return element.genre == this.selected
         //         }
         //     });
-
         // }
+
+    },
+
+
+    /* Receive and assaign the V-model values when the 'Select.vue' is a non related component*/
+    mounted(){
+        this.$root.$on('vModelGenre',(arg1)=>{ 
+            this.selected=arg1
+        });
+        
+
+        this.$root.$on('vModelDate',(arg2)=>{ 
+            this.dateSelected=arg2
+        });
 
     },
 
@@ -89,20 +105,21 @@ export default {
                 .then(res=>{
                     this.records = res.data.response;
                     this.loading = false
-                    this.createList()
+                    this.$root.$emit('sendArray', this.records)
+                    // this.createList()
                 })
                 .catch(error =>{
                     console.log('Errore', error);
                 });
         },
 
-        createList(){
-            this.records.forEach(element => {
-                if (!this.options.includes(element.genre)) {
-                     this.options.push(element.genre)
-                }
-            });
-        },
+        // createList(){
+        //     this.records.forEach(element => {
+        //         if (!this.options.includes(element.genre)) {
+        //              this.options.push(element.genre)
+        //         }
+        //     });
+        // },
 
         filterByGenre(array){
             return array.filter(element =>{
@@ -134,18 +151,16 @@ export default {
             
         },
 
-        /* if the Select is a Child Component */
+        /* Assaign the V-model values of child to the v-models of parents when 'Select.vue' is a Child Component */
+        // genreReceived(arg1){
+        //     console.log
+        //     this.selected=arg1
+        // },
 
-        genreReceived(arg1){
-            console.log
-            this.selected=arg1
-        },
-
-        dateReceived(arg2){
-            this.dateSelected=arg2
-        }
+        // dateReceived(arg2){
+        //     this.dateSelected=arg2
+        // }
     }
-
 
 }
 </script>
@@ -157,16 +172,18 @@ section{
     background-color: $dark;
     height: 100vh;
     overflow-y:scroll ;
-    .select{
-        color:$text-light;
 
-        select{
-            padding: 5px;
-            background-color: lightgrey;
-            width: 100px;
-        } 
+    /* style for select */
+    /* .select{
+            color:$text-light;
 
-    }
+            select{
+                padding: 5px;
+                background-color: lightgrey;
+                width: 100px;
+            } 
+
+    } */
   
   
 }

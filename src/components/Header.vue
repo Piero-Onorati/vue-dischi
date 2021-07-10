@@ -1,12 +1,22 @@
 <template>
-    <header>
-        <img src="../assets/img/spotify-icon.png" class="my-2 mx-4" alt="logo">
+    <header class="d-flex justify-content-between align-items-center"> 
+        <div class="img-container">
+            <img src="../assets/img/spotify-icon.png" class="my-2 mx-4" alt="logo">
+        </div>    
+        
+        <Select/> 
+        
     </header>
 </template>
 
 <script>
+
+import Select from '@/components/Select.vue'
 export default {
-    name: 'Header'
+    name: 'Header',
+    components:{
+        Select
+    }
 
 }
 </script>
@@ -14,12 +24,16 @@ export default {
 <style lang='scss'>
 @import '../style/vars.scss';
 
+
 header{
-    background-color: $light;
+    background-color: $light; 
 
-
-    img{
+    .img-container{
         width: 50px;
+
+        img{
+            width: 100%;
+        }
     }
 }
 

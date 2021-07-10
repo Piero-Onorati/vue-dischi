@@ -1,9 +1,11 @@
 <template>
-  <div class="col-6 select py-4">
+  <div class="col-6 select">
                 <span class="px-3">Select genre...</span>
                 <select v-model="selecting" @change="selectGenre">
                     <option >All</option>
-                    <option v-for="(detail,index) in details" :key="index">{{detail}}</option>
+                    <!-- if the Select is a Child Component -->
+                    <!-- <option v-for="(detail,index) in details" :key="index">{{detail}}</option> -->
+                    <option v-for="(option,index) in options" :key="index">{{option}}</option>
                 </select>
 
                 <span class="px-3">Sort by date...</span>
@@ -19,34 +21,64 @@
 export default {
     name:'Select',
     /* if the Select is a Child Component use props*/
-    props:["details"],
+    // props:["details"],
     data(){
         return{
             selecting:'',
-            dateSelecting:''
+            dateSelecting:'',
+            options:[]
         }
+    },
+
+    created(){
+        this.$root.$on('sendArray',(arr)=>{ 
+            arr.forEach(element => {
+                if (!this.options.includes(element.genre)) {
+                     this.options.push(element.genre)
+                }
+            })
+        })
+        
+
     },
 
     methods:{
         /* if the Select is a Child Component*/
+        // selectGenre(){
+        //     this.$emit('vModelGenre', this.selecting)
+        // },
+
         selectGenre(){
-            this.$emit('vModelGenre', this.selecting)
+            this.$root.$emit('vModelGenre', this.selecting)
         },
 
         /* if the Select is a Child Component*/
+        // selectDate(){
+        //     this.$emit('vModelDate', this.dateSelecting)
+        // }
         selectDate(){
-            this.$emit('vModelDate', this.dateSelecting)
+            this.$root.$emit('vModelDate', this.dateSelecting)
         }
-
-
     }
-
-
 
 
 }
 </script>
 
-<style>
+<style lang='scss'>
+@import '../style/vars.scss';
+
+    .select{
+        display: flex;
+        justify-content: flex-end;
+        color:$text-light;
+        padding-right: 35px;
+
+        select{
+            padding: 5px;
+            background-color: lightgrey;
+        } 
+
+    } 
 
 </style>
