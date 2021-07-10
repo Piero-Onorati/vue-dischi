@@ -33,7 +33,6 @@
 import axios from 'axios'
 import Card from '@/components/Card.vue'
 import Loader from '@/components/Loader.vue'
-import { component } from 'vue/types/umd'
 /* 2) if the Select is a Child Component */
 // import Select from '@/components/Select.vue'
 
