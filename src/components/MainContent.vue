@@ -1,7 +1,8 @@
 <template>
     <section>
         <div class="container-sm pb-4">
-            <div class="col-6 select py-4">
+            <!-- if the Select is the Component with the list that needed to be sorted -->
+            <!-- <div class="col-6 select py-4">
                 <span class="px-3">Select genre...</span>
                 <select v-model="selected">
                     <option >All</option>
@@ -14,12 +15,17 @@
                     <option>Newest</option>
                     <option>Oldest</option>
                 </select>
-            </div>   
+            </div>   -->
+            
+            <!-- if the Select is a Child Component -->
+            <Select :details="options" @vModelGenre="genreReceived"  @vModelDate="dateReceived"/> 
            
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 gx-4" v-if="!loading">
                 <Card v-for="(record,index) in filterRecords" :key="index" :details="record"/>
             </div>
             <Loader v-else/>
+
+           
         </div>
     </section>
 </template>
@@ -28,13 +34,15 @@
 import axios from 'axios'
 import Card from '@/components/Card.vue'
 import Loader from '@/components/Loader.vue'
+import Select from '@/components/Select.vue'
 
 
 export default {
     name:'MainContent',
     components:{
         Card,
-        Loader
+        Loader,
+        Select
     },
 
     data(){
@@ -45,7 +53,6 @@ export default {
             selected:'',
             dateSelected:'',
             options:[],
-            new:[]
         }
     },
 
@@ -90,7 +97,6 @@ export default {
         },
 
         createList(){
-            console.log(this.records)
             this.records.forEach(element => {
                 if (!this.options.includes(element.genre)) {
                      this.options.push(element.genre)
@@ -126,6 +132,17 @@ export default {
                 return array
             }
             
+        },
+
+        /* if the Select is a Child Component */
+
+        genreReceived(arg1){
+            console.log
+            this.selected=arg1
+        },
+
+        dateReceived(arg2){
+            this.dateSelected=arg2
         }
     }
 
